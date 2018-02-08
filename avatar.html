@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="300" height="300"></canvas>
+
+    <script>
+        (function (global) {
+            var canvas = document.getElementById('canvas');
+            var ctx = canvas.getContext('2d');
+            var h = 14.5;
+            // #36ad50
+
+            var blackList = [
+                            [6, 6], [7, 6], [8, 6], [9, 6], [10, 6], [11, 6], [12, 6], [13, 6],
+                            [6, 7],                 [9, 7], [10, 7],                   [13, 7],
+                            [6, 8],                 [9, 8], [10, 8],                   [13, 8],
+    [3, 9],[4, 9], [5, 9],　[6, 9], [7, 9], [8, 9], [9, 9], [10, 9], [11, 9], [12, 9], [13, 9], [14, 9], [15,9], [16,9],
+                            [6, 10],[7, 10], [8, 10], [9, 10],  [10, 10], [11, 10], [12, 10], [13, 10],
+                            [6, 11], [7, 11],                                       [12, 11], [13, 11],
+                            [6, 12], [7, 12], [8, 12], [9, 12], [10, 12], [11, 12], [12, 12], [13, 12],
+                                             [8, 13],                    [11, 13],
+                                             [8, 14],                    [11, 14],
+                                             [8, 15],                    [11, 15],
+            ];
+
+            var greenList = [
+                [11, 6],  [12, 6],
+                [11, 7],  [12, 7],
+            ];
+
+            var yellowList = [
+                [7, 6],  [8, 6],
+                [7, 7],  [8, 7],
+            ];
+
+            var i = 0;
+            while (i < blackList.length) {
+                blackList[i][1] -= 1;
+                i++;
+            }
+
+            function fill (x, y, color) {
+                ctx.fillStyle = color;
+                ctx.shadowColor = color;
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetX = 1;
+                ctx.shadowOffsetY = 1;
+                ctx.fillRect(x * 15 - 0.5, y * 15 - 0.5, h, h);
+            }
+
+            function inList(list, x, y) {
+                for (var i = 0; i < list.length; i++) {
+                    if (list[i][0] === x && list[i][1] === y) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            for (var x = 0; x < 20; x++) {
+                for (var y = 0; y < 20 ; y++) {
+                    if (inList(blackList, x, y)) {
+                        fill(x, y, '#212121');
+                    } else if (inList(greenList, x, y)) {
+                        fill(x, y, '#7CB342');
+                    } else if (inList(yellowList, x, y)) {
+                        fill(x, y, '#FFD600');
+                    } else {
+                        if (Math.random() > 0.68) {
+                            fill(x, y, '#c1c1c1');
+                        } else {
+                            fill(x, y, '#eee');
+                        }
+                    }
+                }
+            }
+
+        })(window)
+    </script>
+</body>
+</html>
